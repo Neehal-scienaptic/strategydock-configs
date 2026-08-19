@@ -1,0 +1,1032 @@
+{
+  "loan_app_workflow": {
+    "waterfall": [
+      "knockout",
+      "edge_case",
+      "configurable"
+    ],
+    "knockout_groups": [
+      "knockout"
+    ],
+    "custom_rules": [],
+    "disabled_policy_rules": {
+      "loan_app_workflow": {
+        "All": [
+          "FtabNotEligible",
+          "OutOfScopeProductDecline"
+        ],
+        "Direct_Auto": [],
+        "Indirect_Auto": [],
+        "Personal_Loan": [],
+        "Credit_Card": [],
+        "FTAB": []
+      },
+      "deposit_app_workflow": {
+        "All": [
+          "MultipleUnsecuredAppsNoAutoApprovalZeroLoanAmount",
+          "TradelineMissingPayment",
+          "CheckIncomeCombined",
+          "MortgageTerm"
+        ]
+      }
+    },
+    "disable_rules_based_on_env": {
+      "all": [],
+      "uat": [
+        "OpenBankruptcy"
+      ],
+      "production": []
+    },
+    "prerequisites": {
+      "knockout": {
+        "func_value_path": [
+          {
+            "func_name": "MeridianLinkController",
+            "params": {
+              "app_json": "input_json",
+              "config": "config",
+              "request": "request"
+            },
+            "result_path": "app_json['CDM']"
+          },
+          {
+            "func_name": "fetch_sentilink",
+            "params": {
+              "app_json": "app_json",
+              "input_json": "input_json",
+              "sentilink_config": "sentilink_config",
+              "background_tasks": "background_tasks",
+              "request": "request"
+            },
+            "result_path": "app_json['CDM']['Sentilink_Score']"
+          },
+          {
+            "func_name": "fetch_cashflow",
+            "params": {
+              "app_json": "app_json",
+              "cashflow_config": "cashflow_config",
+              "background_tasks": "background_tasks",
+              "request": "request"
+            },
+            "result_path": "app_json['CDM']['Cashflow_Model']"
+          }
+        ]
+      },
+      "edge_case": {
+        "func_value_path": [
+          {
+            "func_name": "get_grades_custom_sequence",
+            "params": {
+              "input_json": "app_json",
+              "grading_config": "grading_config",
+              "subsequent_function_paths": [
+                {
+                  "func_name": "get_grades_sequence",
+                  "params": {
+                    "app_json": "app_json",
+                    "grading_config": "grading_config"
+                  },
+                  "result_path": "app_json['CDM']['Grade']"
+                },
+                {
+                  "func_name": "fetch_bureau_model",
+                  "params": {
+                    "input_data": "bureau_model_input",
+                    "bureau_model_config": "bureau_model_config",
+                    "request": "request"
+                  },
+                  "result_path": "app_json['CDM']['Bureau_Model']"
+                },
+                {
+                  "func_name": "fetch_LN",
+                  "params": {
+                    "app_json": "app_json",
+                    "ln_config": "ln_config",
+                    "input_json": "input_json",
+                    "background_tasks": "background_tasks",
+                    "request": "request"
+                  },
+                  "result_path": "app_json['CDM']['LN_Model']"
+                }
+              ]
+            },
+            "result_path": ""
+          },
+          {
+            "func_name": "fetch_anomaly_model",
+            "params": {
+              "app_json": "app_json",
+              "input_json": "input_json",
+              "anomaly_model_config": "anomaly_model_config",
+              "request": "request"
+            },
+            "result_path": "app_json['CDM']['Anomaly_Model']"
+          },
+          {
+            "func_name": "get_decision_main_func",
+            "params": {
+              "app_json": "app_json",
+              "workflow_type": "loan_app_workflow",
+              "decision_config": "decision_config"
+            },
+            "result_path": ""
+          }
+        ]
+      },
+      "configurable": {
+        "func_value_path": [
+          {
+            "func_name": "modify_product_if_ftab",
+            "params": {
+              "workflow_type": "loan_app_workflow",
+              "policy_output": "policy_output"
+            },
+            "result_path": ""
+          }
+        ]
+      }
+    },
+    "knockout": {
+      "All": [
+        {
+          "rule_name": "InvalidApplicationAgeLessThan18",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "OpenBankruptcy",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "BK_Count_IsDismissed_36m",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CUDerogAccntsUnpaid",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "ID_Theft_Alert_tier3",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Synthetic_ID_Alert_tier3",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CreditFreeze",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ProductOutOfScope",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "OutOfScopeProductDecline",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "InvalidFico",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "InvalidIncome_ApplicationWithoutAddressMatch",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "InvalidLoanAmountVeryHigh",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "InvalidLoanAmountMissing",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "InvalidLoanTermVeryHigh",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "InvalidLoanTermMissing",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "NoCollateralInfo",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "CosignerApp",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "No_ID_Theft_Alert",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Sentilink_Fraud_Scores_Pulled_OptionA",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CoreCUUnpaidDerog",
+          "rule_type": 2
+        }
+      ],
+      "Direct_Auto": [],
+      "RV": [],
+      "Boats": [],
+      "Toys": [],
+      "Indirect_Auto": [],
+      "Personal_Loan": [],
+      "Credit_Card": [],
+      "HELOC": []
+    },
+    "edge_case": {
+      "All": [
+        {
+          "rule_name": "HighUtilization",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Curr30PlusDPDGtEq500",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Multiple30PlusDQInL12M",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Delinquency60DPDLast24M",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "SeriousDerogL12MUnpaid",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MultipleUnpaidDerogOnFile36m",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "BK_Count_IsDischarged_12m",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "BK_Count_IsDischarged_13to36m",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CoreAlertBad_NegativeCheckingAccount",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CoreAlertBad_NegativeLoanAccount_Currently_PastDue",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "ChildSupportColl",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "SeriousDerogL13to36MUnpaid",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "SeriousDerogL12MPaid",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MultiplePaidDerogOnFile36m",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "SeriousDelinL12M",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MortgageTerm",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "DebtCounseling",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "TradelineMissingPayment",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "ThinFileAll",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "NoPositiveHistoryAll",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MultipleUnsecuredAppsNoAutoApprovalZeroLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ExcessiveOpenTLs",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CreditInquiries",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "employmentstatusnoteligibleApplication",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MinTimeCurrentEmploymentReview",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "isselfemployed",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MinTimeSelfEmployed",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "HighSSIIncome",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CheckIncomeCombined",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MonthlyDisposableIncome",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ID_Theft_Alert_tier2",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Synthetic_ID_Alert_tier2",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "ID_Theft_Alert_tier1",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Synthetic_ID_Alert_tier1",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "RideShareEmployers",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CoreAlertGood",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "LowRiskAutoDoNotDecline",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "FtabNotEligible",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "AnomalyModelOutlierProbability",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelSubjectDeceasedFlag",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelLNConfirmation",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelLNAddr",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelLNPIICheck",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelCreditMuleInd",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelCreditWashInd",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelBoostedTradeInd",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "AnomalyModelInvalidPII",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CorelationCorePullFailed",
+          "rule_type": 2
+        }
+      ],
+      "Direct_Auto": [],
+      "RV": [],
+      "Boats": [],
+      "Toys": [],
+      "Indirect_Auto": [],
+      "Personal_Loan": [],
+      "Credit_Card": [],
+      "HELOC": []
+    },
+    "configurable": {
+      "All": [
+        {
+          "rule_name": "SpecialLoanCategories",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "IneligibleDealerNoAutoApproval",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "CorePriorCUChargeOffNotesDecline",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "CorePriorHighRiskNotesDecline",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "WorstCreditTier",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ZipCodeEligibilityMembershipDirect",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ZipCodeEligibilityMembershipIndirect",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ItinApplication",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "InvalidApplicantAgeLessthan21",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "BureauFraudAlerts",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "Employee_of_CU",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MembershipLength",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "DifferentAddressBtwCoApplicants",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MultipleIndirectAutoNoAutoDecline",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTotalExposureOnUs",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTotalExposureWoMtgOnUs",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTotalSecuredExposureWoMtgOnUs",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "ApplicationDoNotLend",
+          "rule_type": 3
+        }
+      ],
+      "Direct_Auto": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Indirect_Auto": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Direct_Auto_RV": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Indirect_Auto_RV": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Direct_Boat": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Indirect_Boat": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Direct_Toys": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Indirect_Toys": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        }
+      ],
+      "Personal_Loan": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCreditLimitToIncomeMultiplier",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTotalUnsecuredExposureOnUs",
+          "rule_type": 3
+        }
+      ],
+      "Credit_Card": [
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCreditLimit",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCreditLimitToIncomeMultiplier",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxAdvance",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTotalUnsecuredExposureOnUs",
+          "rule_type": 3
+        }
+      ],
+      "FTAB": [
+        {
+          "rule_name": "FicoCutoff",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxUnsecuredDTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxPTI",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVPreAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLTVIncAddOn",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxTerm",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxLoanAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MonthlyDisposableIncome",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxBackendAmount",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MinTimeInJob",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MinTimeSelfEmployed",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "MaxVehicleAge",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxCollateralMileage",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MinDownPaymentFTAB",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "PriorVehicleBorrowingHistory",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "MaxVehicleValue",
+          "rule_type": 3
+        },
+        {
+          "rule_name": "DelinOrDerogCollection",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "Sentilink_Fraud_Scores",
+          "rule_type": 2
+        },
+        {
+          "rule_name": "CheckIncomeCombined",
+          "rule_type": 3
+        }
+      ]
+    }
+  }
+}
