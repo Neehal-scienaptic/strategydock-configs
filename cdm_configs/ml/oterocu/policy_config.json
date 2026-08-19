@@ -1,0 +1,845 @@
+{
+  "loan_app_workflow": {
+    "Allowable_Labels": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7"
+    ],
+    "All": {
+      "AgeUnder18": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Applicant < 18yo",
+        "adverse_action_reason": "You are not eligible for membership in this Credit Union"
+      },
+      "open_bankruptcy": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Open BK",
+        "adverse_action_reason": "Bankruptcy"
+      },
+      "dismissed_bankruptcy_in_last_3": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Dismissed BK L3 Yrs",
+        "adverse_action_reason": "Bankruptcy"
+      },
+      "cu_derog_account_unpaid_credit": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Prior On-Us Derog (Unpaid)",
+        "adverse_action_reason": "Poor credit performance with us"
+      },
+      "cu_derog_account_unpaid_core": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Unpaid Prior loss with CU",
+        "adverse_action_reason": "Poor credit performance with us"
+      },
+      "member_has_negative_core_statu": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Member ineligible based on Core",
+        "adverse_action_reason": "Poor credit performance with us"
+      },
+      "extremely_high_risk_of_id_frau": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Depending on which score(s) come back elevated:\nScienaptic Fraud Shield Alert - Exremely High Risk\n[ID Theft] or [Synthetic ID]",
+        "adverse_action_reason": "Unable to verify identity"
+      },
+      "discharged_bankruptcy_13_36_mo": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Dischg BK L13-36 Mo",
+        "adverse_action_reason": "Bankruptcy"
+      },
+      "on_us_deposit_account_overdraf": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Currently overdrawn or frequently overdrawn with CU",
+        "adverse_action_reason": "Poor credit performance with us"
+      },
+      "on_us_past_due_loan_core": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Currently past due with CU",
+        "adverse_action_reason": "Poor credit performance with us"
+      },
+      "aggregate_limit": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Depending on which limits(s) are being exceeded: \n[Aggr Total exposure w CU exceeds max for grade]\n[Aggr Consumer exposure w CU exceeds max for grade]\n[Aggr Secured exposure w CU exceeds max for grade]\n[Aggr Unsecured exposure w CU exceeds max for grade]",
+        "adverse_action_reason": "NA"
+      },
+      "child_support_collections": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Child Support account on File",
+        "adverse_action_reason": "Collection action or judgement"
+      },
+      "unpaid_derog_in_last_13_36_mon": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Unpaid Derog in L13 to L36M",
+        "adverse_action_reason": "Delinquent past or present credit obligations with others"
+      },
+      "paid_derog_in_last_12_months": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Paid Derog in L12M",
+        "adverse_action_reason": "Delinquent past or present credit obligations with others"
+      },
+      "multiple_paid_derogs_in_last_3": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "2+ Paid Derogs L36 Mo",
+        "adverse_action_reason": "Delinquent past or present credit obligations with others"
+      },
+      "60+_day_delinquency_in_last_12": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Serious DQ in L12M",
+        "adverse_action_reason": "Delinquent past or present credit obligations with others"
+      },
+      "higher_than_expected_mortgage_": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review App: Mortgage term > 360 Months",
+        "adverse_action_reason": "NA"
+      },
+      "debt_counseling_forbearance": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review App: Debt Counselling or Forbearance on file",
+        "adverse_action_reason": "NA"
+      },
+      "tradeline_with_missing_payment": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review App: Tradeline with missing payment",
+        "adverse_action_reason": "NA"
+      },
+      "thin_file_note:_evaluated_at_a": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Thin file",
+        "adverse_action_reason": "Limited credit experience"
+      },
+      "no_positive_trade_history_note": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "No positive trades",
+        "adverse_action_reason": "Limited credit experience"
+      },
+      "multiple_unsecured_application": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review Required - Recent Unsecured Application",
+        "adverse_action_reason": "NA"
+      },
+      "excessive_trades_opened_in_rec": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "> 4 trades opened L6 Mo",
+        "adverse_action_reason": "Too many accounts opened recently"
+      },
+      "excessive_inquiries_in_recent_": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "High # recent Inquiries",
+        "adverse_action_reason": "Too many recent inquiries on credit bureau report"
+      },
+      "ineligible_employment_types": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review App: Ineligible employment type",
+        "adverse_action_reason": "NA"
+      },
+      "minimum_time_in_current_employ": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review App: Low grade with recent current employment",
+        "adverse_action_reason": "NA"
+      },
+      "self_employed_applicant": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Self-Employed Applicant",
+        "adverse_action_reason": "NA"
+      },
+      "insufficient_time_self_employe": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Insufficient Time Self-Employed",
+        "adverse_action_reason": "NA"
+      },
+      "high_social_security_income": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Review high stated Social Security Income",
+        "adverse_action_reason": "NA"
+      },
+      "atypically_high_income": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Monthly Income > $30,000",
+        "adverse_action_reason": "NA"
+      },
+      "minimum_disposable_income_note": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Disposable Income < $500",
+        "adverse_action_reason": "NA"
+      },
+      "high_risk_alert": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Depending on which score(s) come back elevated:\nScienaptic Fraud Shield Alert - High Risk\n[ID Theft] or [Synthetic ID]",
+        "adverse_action_reason": "Unable to verify identity"
+      },
+      "elevated_risk_alert": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Depending on which score(s) come back elevated:\nScienaptic Fraud Shield Alert - Elevated Risk\n[ID Theft] or [Synthetic ID]",
+        "adverse_action_reason": "NA"
+      },
+      "rideshare_delivery_not_eligibl": {
+        "policy_by_grade": {
+          "All": {
+            "threshold_bin": [
+              0
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Not eligible - Rideshare/Delivery",
+        "adverse_action_reason": "NA"
+      }
+    },
+    "Credit_Card": {
+      "MaxDti": {
+        "policy_by_grade": {
+          "S1": {
+            "threshold_bin": [
+              0.5,
+              1
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S2": {
+            "threshold_bin": [
+              0.5,
+              1
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S3": {
+            "threshold_bin": [
+              0.5,
+              1
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S4": {
+            "threshold_bin": [
+              0.45,
+              0.95
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S5": {
+            "threshold_bin": [
+              0.45,
+              0.95
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S6": {
+            "threshold_bin": [
+              0.45,
+              0.95
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S7": {
+            "threshold_bin": [
+              0.4,
+              0.9
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "DTI exceeds max for grade",
+        "adverse_action_reason": "Excessive obligations in relation to income"
+      },
+      "MaxUnsecuredDebtRatioUdti": {
+        "policy_by_grade": {
+          "S1": {
+            "threshold_bin": [
+              0.5,
+              0.8
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S2": {
+            "threshold_bin": [
+              0.45,
+              0.75
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S3": {
+            "threshold_bin": [
+              0.45,
+              0.75
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S4": {
+            "threshold_bin": [
+              0.45,
+              0.75
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S5": {
+            "threshold_bin": [
+              0.4,
+              0.7
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S6": {
+            "threshold_bin": [
+              0.35,
+              0.7
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S7": {
+            "threshold_bin": [
+              0.3,
+              0.7
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "UDTI exceeds max for grade",
+        "adverse_action_reason": "Excessive obligations in relation to income"
+      },
+      "MaxCreditLimit": {
+        "policy_by_grade": {
+          "S1": {
+            "threshold_bin": [
+              30000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S2": {
+            "threshold_bin": [
+              25000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S3": {
+            "threshold_bin": [
+              20000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S4": {
+            "threshold_bin": [
+              15000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S5": {
+            "threshold_bin": [
+              10000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S6": {
+            "threshold_bin": [
+              5000
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          },
+          "S7": {
+            "threshold_bin": [
+              2500
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review"
+            ]
+          }
+        },
+        "verbiage": "Amount exceeds max for grade",
+        "adverse_action_reason": "NA"
+      },
+      "MaximumAdvanceUnsecured": {
+        "policy_by_grade": {
+          "S1": {
+            "threshold_bin": [
+              1.5,
+              0.2
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S2": {
+            "threshold_bin": [
+              1.5,
+              0.2
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S3": {
+            "threshold_bin": [
+              1.5,
+              0.2
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S4": {
+            "threshold_bin": [
+              1.25,
+              0.175
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S5": {
+            "threshold_bin": [
+              1.1,
+              0.15
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S6": {
+            "threshold_bin": [
+              1,
+              0.125
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          },
+          "S7": {
+            "threshold_bin": [
+              1,
+              0.1
+            ],
+            "threshold_lbl": [
+              "Low",
+              "Review",
+              "Decline"
+            ]
+          }
+        },
+        "verbiage": "Lack of Comparable Credit",
+        "adverse_action_reason": "Insufficient comparable credit for amount requested"
+      }
+    }
+  }
+}
